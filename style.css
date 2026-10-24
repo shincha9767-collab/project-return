@@ -1,0 +1,576 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+:root {
+  --pink: #ff4f87;
+  --deep-pink: #e93675;
+  --soft-pink: #ffe4ee;
+  --cream: #fffaf7;
+  --text: #593847;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Nunito', sans-serif;
+  color: var(--text);
+  background: #ffe6ef url("background.jpg") center / cover fixed no-repeat;
+}
+
+button {
+  font: inherit;
+}
+
+.screen {
+  display: none;
+  min-height: 100vh;
+  width: 100%;
+  padding: 24px;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen.active {
+  display: flex;
+  animation: fadeIn 0.45s ease both;
+}
+
+.screen.hidden {
+  display: none;
+}
+
+.glass-card {
+  width: min(100%, 650px);
+  padding: clamp(24px, 5vw, 42px);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 28px;
+  background: rgba(255, 250, 252, 0.88);
+  box-shadow: 0 18px 60px rgba(130, 43, 78, 0.17);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  color: var(--deep-pink);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+h1,
+h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  line-height: 1.35;
+}
+
+h1 {
+  margin: 12px 0;
+  font-size: clamp(28px, 6vw, 42px);
+}
+
+h2 {
+  margin: 18px 0 24px;
+  color: var(--deep-pink);
+  font-size: clamp(24px, 5vw, 34px);
+}
+
+.intro-text {
+  margin: 16px 0 28px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.main-button,
+.answer-button {
+  border: 0;
+  border-radius: 18px;
+  cursor: pointer;
+  font-weight: 800;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.main-button {
+  padding: 15px 24px;
+  color: white;
+  background: linear-gradient(135deg, #ff6b9d, #e93675);
+  box-shadow: 0 8px 20px rgba(233, 54, 117, 0.25);
+}
+
+.main-button:hover,
+.answer-button:hover {
+  transform: translateY(-3px);
+}
+
+.main-button:focus-visible,
+.answer-button:focus-visible {
+  outline: 3px solid #b62962;
+  outline-offset: 4px;
+}
+
+.question-card {
+  max-width: 590px;
+}
+
+.question-gif {
+  display: block;
+  width: min(240px, 75%);
+  height: 210px;
+  margin: 10px auto 20px;
+  object-fit: contain;
+}
+
+.answers {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.answer-button {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid #ffd0e0;
+  background: rgba(255, 255, 255, 0.88);
+  color: #71364e;
+  font-size: 1rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.answer-button:hover {
+  border-color: var(--pink);
+  box-shadow: 0 6px 18px rgba(233, 54, 117, 0.12);
+}
+
+/* Letter screen: a separate background from the first two screens. */
+#letterScreen {
+  background:
+    linear-gradient(rgba(255, 231, 240, 0.70), rgba(255, 240, 245, 0.80)),
+    url("letter-background.jpg") center / cover no-repeat,
+    linear-gradient(135deg, #ffd8e7, #fff3e8);
+}
+
+.letter-card {
+  width: min(100%, 800px);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  padding: clamp(22px, 5vw, 44px);
+  background: rgba(255, 253, 251, 0.94);
+  text-align: left;
+}
+
+.letter-card > .eyebrow,
+.letter-card > h1,
+.letter-card > .footer-note {
+  text-align: center;
+}
+
+.letter-card h1 {
+  color: var(--deep-pink);
+  font-size: clamp(27px, 5vw, 38px);
+}
+
+.letter-content {
+  margin-top: 24px;
+  color: #563748;
+  font-size: clamp(15px, 2.5vw, 17px);
+  line-height: 1.95;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.footer-note {
+  margin: 30px 0 0;
+  color: var(--deep-pink);
+  font-weight: 800;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .screen {
+    padding: 14px;
+  }
+
+  .glass-card {
+    border-radius: 22px;
+  }
+
+  .question-gif {
+    height: 175px;
+  }
+
+  .letter-card {
+    max-height: calc(100vh - 28px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* BACKGROUND 1: Enter screen + all questions */
+body {
+  background-color: #ffe6ef;
+  background-image: url("./background.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Keep the first background visible across the first two phases */
+#enterScreen,
+#questionsScreen {
+  background: transparent;
+}
+
+/* BACKGROUND 2: Letter section only */
+#letterScreen {
+  background-color: #ffe8f0;
+  background-image:
+    linear-gradient(
+      rgba(255, 235, 243, 0.35),
+      rgba(255, 235, 243, 0.45)
+    ),
+    url("./letter-background.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  /* Allow the letter screen to scroll */
+  align-items: flex-start;
+  overflow-y: auto;
+}
+
+/* Make the complete letter readable and scrollable */
+#letterScreen .letter-card {
+  width: min(100%, 800px);
+  max-height: none;
+  height: auto;
+  overflow: visible;
+  margin: auto;
+  flex-shrink: 0;
+}
+
+#letterScreen .letter-content {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.9;
+}
+
+/* Phone scrolling */
+@media (max-width: 600px) {
+  #letterScreen {
+    padding: 12px;
+    align-items: flex-start;
+  }
+
+  #letterScreen .letter-card {
+    margin: 0 auto;
+  }
+}
+
+/* Keep both background images clear and visible */
+body {
+  background-color: #ffe6ef;
+  background-image: url("./background.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Glass effect for Enter + Questions */
+#enterScreen .glass-card,
+#questionsScreen .glass-card {
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  border-radius: 28px;
+  box-shadow:
+    0 8px 32px rgba(65, 25, 45, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Keep text readable against the background */
+#enterScreen h1,
+#enterScreen p,
+#questionsScreen h2,
+#questionsScreen .eyebrow {
+  text-shadow: 0 1px 8px rgba(255, 255, 255, 0.45);
+}
+
+/* Keep answer buttons readable but glassy */
+#questionsScreen .answer-button {
+  background: rgba(255, 255, 255, 0.60);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Separate, clearly visible letter background */
+#letterScreen {
+  background-color: #ffe6ef;
+  background-image: url("./letter-background.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Letter card: transparent glass, with readable text */
+#letterScreen .letter-card {
+  background: rgba(255, 255, 255, 0.48);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 26px;
+  box-shadow:
+    0 8px 32px rgba(65, 25, 45, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
+/* Make the long paragraph easy to read */
+#letterScreen .letter-content {
+  color: #402432;
+  font-weight: 600;
+  line-height: 1.95;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.22);
+}
+
+/* Keep the letter background visible while scrolling */
+#letterScreen {
+  align-items: flex-start;
+  overflow-y: auto;
+}
+
+#letterScreen .letter-card {
+  max-height: none;
+  overflow: visible;
+  margin: auto;
+}
+
+/* Phone adjustments */
+@media (max-width: 600px) {
+  #enterScreen .glass-card,
+  #questionsScreen .glass-card,
+  #letterScreen .letter-card {
+    border-radius: 22px;
+  }
+
+  #letterScreen .letter-card {
+    margin: 0 auto;
+  }
+}
+
+/* Strong acrylic / frosted-glass effect */
+#enterScreen .glass-card,
+#questionsScreen .glass-card,
+#letterScreen .letter-card {
+  background: rgba(255, 255, 255, 0.28) !important;
+  border: 1px solid rgba(255, 255, 255, 0.65) !important;
+  border-radius: 26px;
+  box-shadow:
+    0 12px 40px rgba(30, 15, 25, 0.20),
+    inset 0 1px 1px rgba(255, 255, 255, 0.75),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.20);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
+
+/* Glass-like answer buttons */
+#questionsScreen .answer-button {
+  background: rgba(255, 255, 255, 0.48) !important;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  box-shadow: 0 4px 14px rgba(70, 30, 45, 0.08);
+}
+
+/* Keep letter text clear */
+#letterScreen .letter-content {
+  color: #392432;
+  font-weight: 600;
+  line-height: 1.95;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+/* Improve background image scaling */
+#letterScreen {
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+}
+
+/* Let the entire letter scroll */
+#letterScreen .letter-card {
+  max-height: none !important;
+  overflow: visible !important;
+  margin: auto;
+}
+
+@media (max-width: 600px) {
+  #letterScreen .letter-card {
+    margin: 0 auto;
+  }
+}
+
+/* ANDROID: visible glass effect */
+#enterScreen,
+#questionsScreen {
+  background: transparent !important;
+}
+
+#enterScreen .glass-card,
+#questionsScreen .glass-card,
+#letterScreen .letter-card {
+  background: rgba(255, 255, 255, 0.22) !important;
+  border: 1px solid rgba(255, 255, 255, 0.65) !important;
+  box-shadow:
+    0 8px 32px rgba(70, 30, 50, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(18px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
+}
+
+/* Keep the letter readable */
+#letterScreen .letter-content {
+  color: #392432 !important;
+  background: transparent !important;
+  line-height: 1.9;
+}
+
+/* Fit Android screens */
+@media (max-width: 600px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .screen {
+    min-height: 100vh;
+    padding: 16px;
+  }
+
+  #letterScreen {
+    min-height: 100vh;
+    overflow-y: auto;
+    align-items: flex-start;
+  }
+
+  #letterScreen .letter-card {
+    width: 100%;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 auto;
+  }
+}
+
+/* Slightly darker background for Enter + Questions */
+body {
+  background-color: #4a303b;
+  background-image:
+    linear-gradient(rgba(30, 15, 25, 0.22), rgba(30, 15, 25, 0.22)),
+    url("./background.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+}
+
+/* Darker frosted acrylic glass */
+#enterScreen .glass-card,
+#questionsScreen .glass-card,
+#letterScreen .letter-card {
+  background: rgba(35, 22, 30, 0.48) !important;
+  border: 1px solid rgba(255, 255, 255, 0.30) !important;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.20) !important;
+  backdrop-filter: blur(18px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
+}
+
+/* Light text on dark glass */
+#enterScreen h1,
+#enterScreen p,
+#questionsScreen h2,
+#questionsScreen .eyebrow,
+#letterScreen .eyebrow,
+#letterScreen h1,
+#letterScreen .footer-note {
+  color: #fff2f7 !important;
+}
+
+/* Answer buttons */
+#questionsScreen .answer-button {
+  color: #fff4f8 !important;
+  background: rgba(255, 255, 255, 0.14) !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Separate letter background */
+#letterScreen {
+  background-color: #49313d !important;
+  background-image:
+    linear-gradient(rgba(25, 15, 22, 0.12), rgba(25, 15, 22, 0.12)),
+    url("./letter-background.jpg") !important;
+  background-position: center top !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-attachment: scroll !important;
+  align-items: flex-start;
+  overflow-y: auto;
+}
+
+/* Keep the long paragraph readable */
+#letterScreen .letter-content {
+  color: #fff5f8 !important;
+  background: transparent !important;
+  line-height: 1.9;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+#letterScreen .letter-card {
+  width: min(100%, 800px);
+  max-height: none !important;
+  height: auto;
+  overflow: visible !important;
+  margin: auto;
+}
+
+@media (max-width: 600px) {
+  #letterScreen .letter-card {
+    margin: 0 auto;
+  }
+}

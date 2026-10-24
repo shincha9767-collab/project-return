@@ -9,45 +9,6 @@ const questionText = document.getElementById("questionText");
 const answersContainer = document.getElementById("answers");
 const questionGif = document.getElementById("questionGif");
 
-// Connect to Supabase safely.
-// If Supabase fails to load, the Enter button will still work.
-
-let supabaseClient = null;
-
-if (
-  window.supabase &&
-  window.SUPABASE_URL &&
-  window.SUPABASE_PUBLISHABLE_KEY
-) {
-  supabaseClient = window.supabase.createClient(
-    window.SUPABASE_URL,
-    window.SUPABASE_PUBLISHABLE_KEY
-  );
-} else {
-  console.error("Supabase library or configuration is missing.");
-}
-
-try {
-  if (
-    window.supabase &&
-    typeof SUPABASE_URL !== "undefined" &&
-    typeof SUPABASE_PUBLISHABLE_KEY !== "undefined" &&
-    SUPABASE_URL &&
-    SUPABASE_PUBLISHABLE_KEY
-  ) {
-    supabaseClient = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
-  } else {
-    console.error(
-      "Supabase library or configuration is missing. Answers cannot be saved yet."
-    );
-  }
-} catch (error) {
-  console.error("Supabase initialization failed:", error);
-}
-
 const questions = [
   {
     text: "Am I really special to you? 💗",
@@ -82,7 +43,7 @@ const questions = [
 ];
 
 let currentQuestion = 0;
-let isSaving = false;
+let isAdvancing = false;
 
 function showScreen(screenToShow) {
   [enterScreen, questionsScreen, letterScreen].forEach((screen) => {
@@ -112,61 +73,19 @@ function renderQuestion() {
     button.className = "answer-button";
     button.textContent = answer;
 
-    button.addEventListener("click", async () => {
-      if (isSaving) return;
+    button.addEventListener("click", () => {
+      if (isAdvancing) return;
+      isAdvancing = true;
 
-      isSaving = true;
+      currentQuestion++;
 
-      const allButtons =
-        answersContainer.querySelectorAll("button");
-
-      allButtons.forEach((item) => {
-        item.disabled = true;
-      });
-
-      button.textContent = "Saving your answer… 💗";
-
-      try {
-        // Don't advance if the database isn't connected.
-        if (!supabaseClient) {
-          throw new Error(
-            "Supabase is not connected. Check supabase-config.js and index.html."
-          );
-        }
-
-        const { error } = await supabaseClient
-          .from("project_return_answers")
-          .insert({
-            question_number: currentQuestion + 1,
-            question_text: question.text,
-            selected_answer: answer
-          });
-
-        if (error) throw error;
-
-        // Move forward only after the answer is saved.
-        currentQuestion++;
-
-        if (currentQuestion < questions.length) {
-          renderQuestion();
-        } else {
-          showScreen(letterScreen);
-        }
-      } catch (error) {
-        console.error("Answer saving failed:", error);
-
-        alert(
-          "Couldn't save your answer. Please check the browser Console for details and try again."
-        );
-
-        allButtons.forEach((item) => {
-          item.disabled = false;
-        });
-
-        button.textContent = answer;
-      } finally {
-        isSaving = false;
+      if (currentQuestion < questions.length) {
+        renderQuestion();
+      } else {
+        showScreen(letterScreen);
       }
+
+      isAdvancing = false;
     });
 
     answersContainer.appendChild(button);
